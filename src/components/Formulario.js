@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../styles/formularioEstilo.css";
 
-//Definir states
 const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) => {
   const [nombre, setNombre] = useState('');
   const [autor, setAutor] = useState('');
@@ -11,17 +10,8 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
   const [categoria, setCategoria] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [foto, setFoto] = useState('');
-  const [contador, setContador] = useState(0);
 
   useEffect(() => {
-    const id = localStorage.getItem('id');
-    if (id) {
-      setContador(parseInt(id));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Actualizar campos si hay una obra seleccionada
     if (obraSeleccionada) {
       setNombre(obraSeleccionada.nombre);
       setAutor(obraSeleccionada.autor);
@@ -31,7 +21,6 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
       setDescripcion(obraSeleccionada.descripcion);
       setFoto(obraSeleccionada.foto);
     } else {
-      // Limpiar campos si no hay una obra seleccionada
       setNombre('');
       setAutor('');
       setFechaCreacion('');
@@ -45,11 +34,9 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //Solicitudes de post y put
     try {
       if (modo === 'crear') {
-        const response = await axios.post('http://localhost:8080/api/obras', {
-          id: contador,
+        await axios.post('http://localhost:3001/api/artworks/create', {
           nombre,
           autor,
           fechaCreacion,
@@ -58,11 +45,8 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
           descripcion,
           foto,
         });
-        console.log(response.data);
-        setContador((prev) => prev + 1);
-        localStorage.setItem('id', contador + 1);
       } else if (modo === 'actualizar' && obraSeleccionada) {
-        await axios.put(`http://localhost:8080/api/obras/${obraSeleccionada.id}`, {
+        await axios.put(`http://localhost:3001/api/artworks/${obraSeleccionada._id}`, {
           nombre,
           autor,
           fechaCreacion,
@@ -71,7 +55,7 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
           descripcion,
           foto,
         });
-        setObraSeleccionada(null); // Reinicia la obra seleccionada después de la actualización
+        setObraSeleccionada(null);
       }
 
       setNombre('');
@@ -82,15 +66,17 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
       setDescripcion('');
       setFoto('');
 
-      //Actualiza la lista de obras
-      const response = await axios.get('http://localhost:8080/api/obras');
+      const response = await axios.get('http://localhost:3001/api/artworks');
       setObras(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Formulario
+  const handleCancelar = () => {
+    setObraSeleccionada(null);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="formulario">
       <h1>{modo === 'crear' ? 'Agregar obra' : 'Actualizar obra'}</h1>
@@ -136,7 +122,12 @@ const Formulario = ({ modo, setObras, obraSeleccionada, setObraSeleccionada }) =
           <input type="text" className="form-control" value={foto} onChange={(e) => setFoto(e.target.value)} />
         </label>
       </div>
-      <button type="submit" className="btn btn-primary">{modo === 'crear' ? 'Guardar' : 'Actualizar'}</button>
+      <div className="buttons-container">
+        <button type="submit" className="btn btn-primary">{modo === 'crear' ? 'Guardar' : 'Actualizar'}</button>
+        {modo === 'actualizar' && (
+          <button type="button" className="btn btn-primary" onClick={handleCancelar}>Cancelar</button>
+        )}
+      </div>
     </form>
   );
 };

@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import Formulario from './components/Formulario';
-import ObraCard from './components/ObraCard';
-import ObraDetalle from './pages/obraDetalle';
+import ArtworkForm from './components/artworkForm';
+import ArtworkCard from './components/artworkCard';
+import ArtworkDetails from './pages/artworkDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [obras, setObras] = useState([]);
-  const [obraSeleccionada, setObraSeleccionada] = useState(null);
+  const [artworks, setArtworks] = useState([]);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
 
   useEffect(() => {
-    obtenerObras();
+    getArtworks();
   }, []);
 
-  const obtenerObras = async () => {
+  const getArtworks = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/artworks');
-      setObras(response.data);
+      setArtworks(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const eliminarObra = async (id) => {
+  const deleteArtwork = async (id) => {
     try {
       await axios.delete(`http://localhost:3001/api/artworks/${id}`);
-      setObras(obras.filter((obra) => obra._id !== id));
+      setArtworks(artworks.filter((artwork) => artwork._id !== id));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const editarObra = (obra) => {
-    setObraSeleccionada(obra);
+  const updateArtwork = (artwork) => {
+    setSelectedArtwork(artwork);
   };
 
   return (
@@ -44,22 +44,22 @@ function App() {
             path="/"
             element={
               <>
-                <Formulario
-                  modo={obraSeleccionada ? 'actualizar' : 'crear'}
-                  setObras={setObras}
-                  obraSeleccionada={obraSeleccionada}
-                  setObraSeleccionada={setObraSeleccionada}
+                <ArtworkForm
+                  mode={selectedArtwork ? 'update' : 'create'}
+                  setArtworks={setArtworks}
+                  selectedArtwork={selectedArtwork}
+                  setSelectedArtwork={setSelectedArtwork}
                 />
 
                 <div className="container">
                   <h2>Obras</h2>
                   <div className="row">
-                    {obras.map((obra) => (
-                      <ObraCard
-                        key={obra._id}
-                        obra={obra}
-                        eliminarObra={eliminarObra}
-                        editarObra={editarObra}
+                    {artworks.map((artwork) => (
+                      <ArtworkCard
+                        key={artwork._id}
+                        artwork={artwork}
+                        deleteArtwork={deleteArtwork}
+                        updateArtwork={updateArtwork}
                       />
                     ))}
                   </div>
@@ -69,8 +69,8 @@ function App() {
           />
 
           <Route
-            path="/obra-detalle/:id"
-            element={<ObraDetalle obras={obras} />}
+            path="/artwork-details/:id"
+            element={<ArtworkDetails artworks={artworks} />}
           />
         </Routes>
       </div>

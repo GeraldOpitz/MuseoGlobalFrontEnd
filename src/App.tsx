@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import ArtworkForm from './components/artworkForm';
 import ArtworkCard from './components/artworkCard';
 import ArtworkDetails from './pages/artworkDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { IArtwork } from './types/interfaces';
+import Layout from './components/layout';
 
 function App() {
-  const [artworks, setArtworks] = useState([]);
-  const [selectedArtwork, setSelectedArtwork] = useState(null);
+  const [artworks, setArtworks] = useState<IArtwork[]>([]);
+  const [selectedArtwork, setSelectedArtwork] = useState<IArtwork | null>(null);
 
   useEffect(() => {
     getArtworks();
@@ -16,14 +18,15 @@ function App() {
 
   const getArtworks = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/artworks');
+      const response = await axios.get<IArtwork[]>('http://localhost:3001/api/artworks');
+      console.log(response.data); // Verificar la respuesta en la consola
       setArtworks(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const deleteArtwork = async (id) => {
+  const deleteArtwork = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3001/api/artworks/${id}`);
       setArtworks(artworks.filter((artwork) => artwork._id !== id));
@@ -32,11 +35,12 @@ function App() {
     }
   };
 
-  const updateArtwork = (artwork) => {
+  const updateArtwork = (artwork: IArtwork) => {
     setSelectedArtwork(artwork);
   };
 
   return (
+    <Layout>
     <Router>
       <div className="App">
         <Routes>
@@ -49,10 +53,10 @@ function App() {
                   setArtworks={setArtworks}
                   selectedArtwork={selectedArtwork}
                   setSelectedArtwork={setSelectedArtwork}
+                  
                 />
 
                 <div className="container">
-                  <h2>Obras</h2>
                   <div className="row">
                     {artworks.map((artwork) => (
                       <ArtworkCard
@@ -60,6 +64,7 @@ function App() {
                         artwork={artwork}
                         deleteArtwork={deleteArtwork}
                         updateArtwork={updateArtwork}
+                        imageUrl={artwork.imageUrl}
                       />
                     ))}
                   </div>
@@ -75,8 +80,8 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </Layout>
   );
 }
 
 export default App;
-

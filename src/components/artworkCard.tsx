@@ -23,6 +23,15 @@ const useStyles = makeStyles({
     width: '32%',
     height: '30%',
   },
+  description: {
+    maxHeight: '60px', 
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textAlign: 'left', 
+  },
+  title: {
+    textAlign: 'left', 
+  },
 });
 
 interface ArtworkCardProps {
@@ -30,9 +39,10 @@ interface ArtworkCardProps {
   deleteArtwork: (id: string) => void;
   updateArtwork: (artwork: IArtwork) => void;
   imageUrl?: string;
+  showButtons?: boolean;
 }
 
-const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, deleteArtwork, updateArtwork, imageUrl }) => {
+const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, deleteArtwork, updateArtwork, imageUrl, showButtons = false }) => {
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -48,22 +58,26 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, deleteArtwork, updat
       <Card className={classes.card}>
         {imageUrl && <CardMedia className={classes.media} image={imageUrl} title={artwork.name} />}
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5" component="h2" className={classes.title} noWrap>
             {artwork.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="p" className={classes.description} noWrap>
             {artwork.description}
           </Typography>
           <Box className={classes.buttonContainer}>
             <Button component={Link} to={`/artwork-details/${artwork._id}`} variant="contained" color="primary" className={classes.button}>
               Ver más
             </Button>
-            <Button variant="contained" color="primary" onClick={handleUpdate} className={classes.button}>
-              Actualizar
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleDelete} className={classes.button}>
-              Eliminar
-            </Button>
+            {showButtons && (
+              <>
+                <Button variant="contained" color="primary" onClick={handleUpdate} className={classes.button}>
+                  Actualizar
+                </Button>
+                <Button variant="contained" color="primary" onClick={handleDelete} className={classes.button}>
+                  Eliminar
+                </Button>
+              </>
+            )}
           </Box>
         </CardContent>
       </Card>

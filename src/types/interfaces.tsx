@@ -2,7 +2,7 @@ export interface IArtwork {
     _id: string;
     name: string;
     author: string;
-    creationDate: Date;
+    creationDate: number;
     country: string;
     category: string;
     description: string;

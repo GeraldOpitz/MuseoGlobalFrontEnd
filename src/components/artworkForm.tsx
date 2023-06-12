@@ -2,9 +2,8 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Typography, Paper, Box } from '@material-ui/core';
+import { Button, TextField, Typography, Paper, Box, MenuItem, Select, FormControl, InputLabel } from '@material-ui/core';
 import { IArtwork } from '../types/interfaces';
-
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -56,7 +55,7 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
 
   const [name, setName] = useState('');
   const [author, setAuthor] = useState('');
-  const [creationDate, setCreationDate] = useState<Date | null>(null);
+  const [creationDate, setCreationDate] = useState<number | undefined>(undefined);
   const [country, setCountry] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -68,14 +67,14 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
     if (selectedArtwork) {
       setName(selectedArtwork.name);
       setAuthor(selectedArtwork.author);
-      setCreationDate(selectedArtwork.creationDate ? new Date(selectedArtwork.creationDate) : null);
+      setCreationDate(selectedArtwork.creationDate);
       setCountry(selectedArtwork.country);
       setCategory(selectedArtwork.category);
       setDescription(selectedArtwork.description);
     } else {
       setName('');
       setAuthor('');
-      setCreationDate(null);
+      setCreationDate(undefined);
       setCountry('');
       setCategory('');
       setDescription('');
@@ -117,14 +116,12 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
       const artworkData = {
         name,
         author,
-        creationDate: creationDate ? creationDate.toISOString() : '',
+        creationDate,
         country,
         category,
         description,
         imageUrl,
       };
-
-
 
       if (mode === 'create') {
         await axios.post('http://localhost:3001/api/artworks/create', artworkData);
@@ -135,7 +132,7 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
 
       setName('');
       setAuthor('');
-      setCreationDate(null);
+      setCreationDate(undefined);
       setCountry('');
       setCategory('');
       setDescription('');
@@ -191,10 +188,11 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
               </Typography>
               <TextField
                 className={classes.textField}
-                type="date"
                 variant="outlined"
-                value={creationDate ? creationDate.toISOString().substring(0, 10) : ''}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setCreationDate(e.target.valueAsDate)}
+                value={creationDate || ''}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setCreationDate(Number(e.target.value))
+                }
               />
               <Typography variant="body1" className={classes.label}>
                 País de origen
@@ -205,15 +203,22 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
                 value={country}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setCountry(e.target.value)}
               />
-              <Typography variant="body1" className={classes.label}>
-                Categoría
-              </Typography>
-              <TextField
-                className={classes.textField}
-                variant="outlined"
-                value={category}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setCategory(e.target.value)}
-              />
+              <FormControl variant="outlined" className={classes.textField}>
+                <InputLabel id="category-label">Categoría</InputLabel>
+                <Select
+                  labelId="category-label"
+                  id="category-select"
+                  value={category}
+                  onChange={(e: ChangeEvent<{ value: unknown }>) => setCategory(e.target.value as string)}
+                  label="Categoría"
+                >
+                  <MenuItem value="">Seleccione una categoría</MenuItem>
+                  <MenuItem value="Pintura">Pintura</MenuItem>
+                  <MenuItem value="Escultura">Escultura</MenuItem>
+                  <MenuItem value="Surrealismo">Surrealismo</MenuItem>
+                  <MenuItem value="Abstracto">Abstracto</MenuItem>
+                </Select>
+              </FormControl>
               <Typography variant="body1" className={classes.label}>
                 Descripción
               </Typography>
@@ -267,7 +272,7 @@ ArtworkForm.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    creationDate: PropTypes.instanceOf(Date).isRequired,
+    creationDate: PropTypes.number.isRequired,
     country: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,

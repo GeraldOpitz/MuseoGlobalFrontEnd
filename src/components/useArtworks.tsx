@@ -12,7 +12,7 @@ const useArtworks = () => {
 
   const getArtworks = async () => {
     try {
-      const response = await axios.get<IArtwork[]>('http://localhost:3001/api/artworks');
+      const response = await axios.get<IArtwork[]>("http://localhost:3001/api/artworks");
       setArtworks(response.data);
     } catch (error) {
       console.log(error);

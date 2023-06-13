@@ -12,7 +12,7 @@ const useArtworks = () => {
 
   const getArtworks = async () => {
     try {
-      const response = await axios.get<IArtwork[]>("http://localhost:3001/api/artworks");
+      const response = await axios.get<IArtwork[]>("https://museoglobalbackend.onrender.com/api/artworks");
       setArtworks(response.data);
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ const useArtworks = () => {
 
   const deleteArtwork = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3001/api/artworks/${id}`);
+      await axios.delete(`https://museoglobalbackend.onrender.com/api/artworks/${id}`);
       setArtworks((prevArtworks) => prevArtworks.filter((artwork) => artwork._id !== id));
     } catch (error) {
       console.log(error);

@@ -4,7 +4,7 @@ import useArtworks from '../components/useArtworks';
 
 
 const Admin = () => {
-    const { artworks, selectedArtwork, setArtworks, setSelectedArtwork, deleteArtwork, updateArtwork } = useArtworks();
+    const { artworks, selectedArtwork, setArtworks, setSelectedArtwork, deleteArtwork, updateArtwork} = useArtworks();
 
     return (
         <div className="admin-container">

@@ -8,7 +8,7 @@ const useArtworks = () => {
 
   useEffect(() => {
     getArtworks();
-  }, []);
+  },);
 
   const getArtworks = async () => {
     try {
@@ -39,6 +39,7 @@ const useArtworks = () => {
     setSelectedArtwork,
     deleteArtwork,
     updateArtwork,
+    getArtworks
   };
 };
 

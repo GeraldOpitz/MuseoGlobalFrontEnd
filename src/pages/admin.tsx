@@ -1,10 +1,20 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ArtworkForm from '../components/artworkForm';
 import ArtworkCard from '../components/artworkCard';
 import useArtworks from '../components/useArtworks';
 
 
 const Admin = () => {
+    const navigate = useNavigate();
     const { artworks, selectedArtwork, setArtworks, setSelectedArtwork, deleteArtwork, updateArtwork} = useArtworks();
+
+    useEffect(() => {
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        if (!isAdmin) {
+          navigate('/access-denied');
+        }
+      }, [navigate]);
 
     return (
         <div className="admin-container">

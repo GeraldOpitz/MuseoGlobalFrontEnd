@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -38,14 +38,17 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
+  pnpm:
+    specifier: ^8.6.2
+    version: 8.6.2
   prop-types:
     specifier: ^15.7.2
     version: 15.7.2
   react:
-    specifier: ^17.0.0
+    specifier: 17.0.0
     version: 17.0.0
   react-dom:
-    specifier: ^17.0.0
+    specifier: 17.0.0
     version: 17.0.0(react@17.0.0)
   react-router-dom:
     specifier: ^6.11.2
@@ -2758,6 +2761,12 @@ packages:
     resolution: {integrity: sha512-MnUuEycAemtSaeFSjXKW/aroV7akBbY+Sv+RkyqFjgAe73F+MR0TBWKBRDkmfWq/HiFmdavfZ1G7h4SPZXaCSg==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pnpm@8.6.2:
+    resolution: {integrity: sha512-Dmgwe+T34Xr6UYaTLXSphPS7ok4h2EPkaHQEH6j7USoAk21CzueAdD1nQLkWJwDnZkJucho0LbKntJ+9B5xlUQ==}
+    engines: {node: '>=16.14'}
+    hasBin: true
+    dev: false
 
   /popper.js@1.16.1-lts:
     resolution: {integrity: sha512-Kjw8nKRl1m+VrSFCoVGPph93W/qrSO7ZkqPpTf7F4bk/sqcfWK019dWBUpE/fBOsOQY1dks/Bmcbfn1heM/IsA==}

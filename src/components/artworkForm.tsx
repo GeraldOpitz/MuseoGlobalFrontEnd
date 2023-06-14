@@ -90,7 +90,7 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
       const formData = new FormData();
       formData.append('image', image);
 
-      const response = await axios.post('https://museoglobalbackend.onrender.com/api/upload', formData, {
+      const response = await axios.post('http://localhost:3001/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -124,9 +124,9 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
       };
 
       if (mode === 'create') {
-        await axios.post('https://museoglobalbackend.onrender.com/api/artworks/create', artworkData);
+        await axios.post('http://localhost:3001api/artworks/create', artworkData);
       } else if (mode === 'update' && selectedArtwork) {
-        await axios.put(`https://museoglobalbackend.onrender.com/api/artworks/${selectedArtwork._id}`, artworkData);
+        await axios.put(`http://localhost:3001/api/artworks/${selectedArtwork._id}`, artworkData);
         setSelectedArtwork(null);
       }
 
@@ -138,7 +138,7 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
       setDescription('');
       setImage(null);
 
-      const response = await axios.get('https://museoglobalbackend.onrender.com/api/artworks');
+      const response = await axios.get('http://localhost:3001/api/artworks');
       setArtworks(response.data);
     } catch (error) {
       console.error(error);

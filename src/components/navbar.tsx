@@ -2,7 +2,6 @@ import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
-
 const useStyles = makeStyles((theme) => ({
   navbar: {
     backgroundColor: 'black',
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   navbarLogoImage: {
-    width: '70px', 
+    width: '70px',
   },
   navbarText: {
     fontFamily: 'Cormorant Garamond, serif',
@@ -27,7 +26,7 @@ const Navbar = () => {
   return (
     <AppBar position="static" className={classes.navbar}>
       <Toolbar>
-        <IconButton edge="start" className={classes.navbarLogo} color="inherit" aria-label="menu" component={Link} to="/">
+        <IconButton edge="start" className={classes.navbarLogo} color="inherit" aria-label="menu" component={Link} to="/homepage">
           <img className={classes.navbarLogoImage} src="/images/logo.png" alt="Logo" />
         </IconButton>
         <Typography component={Link} to="/map" variant="h6" className={classes.navbarText}>

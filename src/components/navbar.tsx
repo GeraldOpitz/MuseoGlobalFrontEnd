@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import LogoutButton from './logoutButton';
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -38,6 +39,7 @@ const Navbar = () => {
         <Typography component={Link} to="/aboutUs" variant="h6" className={classes.navbarText}>
           Sobre nosotros
         </Typography>
+        <LogoutButton/>
       </Toolbar>
     </AppBar>
   );

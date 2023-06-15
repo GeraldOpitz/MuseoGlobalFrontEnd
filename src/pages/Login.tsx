@@ -42,7 +42,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/api/users/login', { username, password });
+      const response = await axios.post('https://museoglobalbackend.onrender.com/api/users/login', { username, password });
       const { token, isAdmin } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('isAdmin', isAdmin);

@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Typography, Paper, Box, MenuItem, Select, FormControl, InputLabel } from '@material-ui/core';
+import { Button, TextField, Typography, Paper, Box, MenuItem, Select, FormControl } from '@material-ui/core';
 import { IArtwork } from '../types/interfaces';
 
 const useStyles = makeStyles((theme) => ({
@@ -124,7 +124,7 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
       };
 
       if (mode === 'create') {
-        await axios.post('http://localhost:3001api/artworks/create', artworkData);
+        await axios.post('http://localhost:3001/api/artworks/create', artworkData);
       } else if (mode === 'update' && selectedArtwork) {
         await axios.put(`http://localhost:3001/api/artworks/${selectedArtwork._id}`, artworkData);
         setSelectedArtwork(null);
@@ -204,7 +204,9 @@ const ArtworkForm: React.FC<ArtworkFormProps> = ({
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setCountry(e.target.value)}
               />
               <FormControl variant="outlined" className={classes.textField}>
-                <InputLabel id="category-label">Categoría</InputLabel>
+              <Typography variant="body1" className={classes.label}>
+                Categoria
+              </Typography>
                 <Select
                   labelId="category-label"
                   id="category-select"

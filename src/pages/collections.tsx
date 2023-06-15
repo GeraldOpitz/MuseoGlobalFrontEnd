@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import useArtworks from '../components/useArtworks';
 import ArtworkCard from '../components/artworkCard';
+import PrivatePage from '../components/privatePage';
 
 const useStyles = makeStyles((theme) => ({
   descriptionSection: {
@@ -31,6 +32,7 @@ const Collections = () => {
   const { artworks, deleteArtwork, updateArtwork } = useArtworks();
 
   return (
+    <PrivatePage>
     <div className={classes.descriptionSection}>
       <Typography variant="h4" className={classes.sectionTitle}>
         Colección
@@ -49,6 +51,7 @@ const Collections = () => {
         </div>
       </div>
     </div>
+    </PrivatePage>
   );
 };
 

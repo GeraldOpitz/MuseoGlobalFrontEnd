@@ -2,6 +2,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, IconButton, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import PrivatePage from '../components/privatePage';
 
 const useStyles = makeStyles((theme) => ({
   mapSection: {
@@ -54,6 +55,7 @@ const Map = () => {
   const classes = useStyles();
 
   return (
+    <PrivatePage>
     <div className={classes.mapSection}>
       <Container maxWidth="md">
         <Grid container className={classes.mapContainer}>
@@ -86,6 +88,7 @@ const Map = () => {
         </Grid>
       </Container>
     </div>
+    </PrivatePage>
   );
 };
 

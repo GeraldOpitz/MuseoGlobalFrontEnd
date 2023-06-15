@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography } from '@material-ui/core';
-
+import PrivatePage from '../components/privatePage';
 
 const useStyles = makeStyles((theme) => ({
   descriptionSection: {
@@ -30,6 +30,7 @@ const AboutUs = () => {
   const classes = useStyles();
 
   return (
+    <PrivatePage>
     <div className={classes.descriptionSection}>
       <Container maxWidth="md">
         <Typography variant="h4" className={classes.sectionTitle}>
@@ -49,6 +50,7 @@ const AboutUs = () => {
         </Typography>
       </Container>
     </div>
+    </PrivatePage>
   );
 };
 

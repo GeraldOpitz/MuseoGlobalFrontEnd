@@ -4,6 +4,7 @@ import { IArtwork } from '../types/interfaces';
 import { Typography, Button, Container, Paper, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import '../styles/detailsStyle.css';
+import PrivatePage from '../components/privatePage';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -69,6 +70,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({ artworks }) => {
   };
 
   return (
+    <PrivatePage>
     <Container className={classes.container}>
       <Paper className={classes.paper}>
         <Grid container spacing={4}>
@@ -103,6 +105,7 @@ const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({ artworks }) => {
         </Grid>
       </Paper>
     </Container>
+    </PrivatePage>
   );
 };
 

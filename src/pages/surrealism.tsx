@@ -3,6 +3,7 @@ import { Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import useArtworks from '../components/useArtworks';
 import ArtworkCard from '../components/artworkCard';
+import PrivatePage from '../components/privatePage';
 
 const useStyles = makeStyles((theme) => ({
   descriptionSection: {
@@ -41,6 +42,7 @@ const Surrealism = () => {
   const surrealism = artworks.filter((artwork) => artwork.category === 'Surrealismo');
 
   return (
+    <PrivatePage>
     <div className={classes.descriptionSection}>
         <Typography variant="h4" className={classes.sectionTitle}>
           Surrealismo
@@ -68,6 +70,7 @@ const Surrealism = () => {
         </Button>
       </div>
     </div>
+    </PrivatePage>
   );
 };
 

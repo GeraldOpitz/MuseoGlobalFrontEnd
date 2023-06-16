@@ -29,6 +29,18 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
     marginBottom: theme.spacing(2),
   },
+  loginImage: {
+    marginBottom: theme.spacing(2),
+    width: '30%',
+    height: 'auto',
+    borderRadius: theme.shape.borderRadius,
+  },
+  loginImageContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+
 }));
 
 const Login: React.FC = () => {
@@ -55,6 +67,13 @@ const Login: React.FC = () => {
   return (
     <div className={classes.container}>
       <Container component="main" maxWidth="xs">
+        <div className={classes.loginImageContainer}>
+          <img
+            src="/images/logo.png"
+            alt="Imagen 1"
+            className={classes.loginImage}
+          />
+        </div>
         <div className={classes.form}>
           <Typography component="h2" variant="h5" align="center">
             Iniciar sesión
